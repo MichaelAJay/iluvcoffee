@@ -1,6 +1,7 @@
-import { Injectable, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Event } from 'src/events/entities/event.entity';
+import { Connection } from 'typeorm';
 import { COFFEE_BRANDS } from './coffees.constants';
 import { CoffeesController } from './coffees.controller';
 import { CoffeesService } from './coffees.service';
@@ -12,7 +13,15 @@ import { Flavor } from './entities/flavor.entity'
     controllers: [CoffeesController],
     providers: [
         CoffeesService,
-        { provide: COFFEE_BRANDS, useFactory: () => ['buddy brew', 'nescafe'] }
+        { 
+            provide: COFFEE_BRANDS,
+            useFactory: async (connection: Connection): Promise<string[]> => {
+                const coffeeBrands = await Promise.resolve(['buddy brew', 'nescafe'])
+                console.log('[!] Async factory ')
+                return coffeeBrands
+            },
+            inject: [Connection]
+        }
     ],
     exports: [CoffeesService]
 })
