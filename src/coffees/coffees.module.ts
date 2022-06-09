@@ -21,7 +21,7 @@ class ProductionConfigService {}
             useClass: process.env.NODE_ENV === 'development'
                 ? DevelopmentConfigService
                 : ProductionConfigService
-        }
+        },
         { provide: COFFEE_BRANDS, useValue: ['buddy brew', 'nescafe'] }
     ],
     exports: [CoffeesService]
