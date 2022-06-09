@@ -6,10 +6,16 @@ import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 import { DatabaseModule } from './database/database.module'; /** Note:  DatabaseModule may have auto-added to the App Module, but I'm not sure we need it there */
+import * as Joi from '@hapi/joi';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        DATABASE_HOST: Joi.required(),
+        DATABASE_PORT: Joi.number().default(5432)
+      })
+    }),
     CoffeesModule, TypeOrmModule.forRoot({
     type: 'postgres',
     host: process.env.DATABASE_HOST,
