@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AppController } from './app.controller';
@@ -7,6 +7,7 @@ import { CoffeesModule } from './coffees/coffees.module';
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 import { DatabaseModule } from './database/database.module'; /** Note:  DatabaseModule may have auto-added to the App Module, but I'm not sure we need it there */
 import appConfig from './config/app.config';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -28,6 +29,8 @@ import appConfig from './config/app.config';
     CoffeesModule,
     CoffeeRatingModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+  ],
 })
 export class AppModule {}
