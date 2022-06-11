@@ -8,6 +8,7 @@ import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 import { DatabaseModule } from './database/database.module'; /** Note:  DatabaseModule may have auto-added to the App Module, but I'm not sure we need it there */
 import appConfig from './config/app.config';
 import { APP_PIPE } from '@nestjs/core';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { APP_PIPE } from '@nestjs/core';
       })
     }), 
     CoffeesModule,
-    CoffeeRatingModule],
+    CoffeeRatingModule,
+    CommonModule],
   controllers: [AppController],
   providers: [
     AppService,
