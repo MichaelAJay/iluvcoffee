@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, ValidationPipe } from '@nestjs/common';
+import { Protocol } from 'src/common/decorators/protocol.decorator';
 import { Public } from 'src/common/decorators/public.decorator';
 import { ParseIntPipe } from 'src/common/pipes/parse-int.pipe';
 import { CoffeesService } from './coffees.service';
@@ -12,8 +13,8 @@ export class CoffeesController {
 
   // @Public()
   @Get()
-  async findAll(@Query() paginationQuery) {
-    await new Promise(resolve => setTimeout(resolve, 4000))
+  async findAll(@Protocol('https') protocol:string, @Query() paginationQuery) {
+    console.log(protocol)
     return this.coffeesService.findAll(paginationQuery);
   }
 
