@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, ValidationPipe } from '@nestjs/common';
+import { ApiForbiddenResponse, ApiResponse } from '@nestjs/swagger';
 import { Protocol } from 'src/common/decorators/protocol.decorator';
 import { Public } from 'src/common/decorators/public.decorator';
 import { ParseIntPipe } from 'src/common/pipes/parse-int.pipe';
@@ -11,7 +12,8 @@ import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
 
-  // @Public()
+  @ApiForbiddenResponse({ description: 'Forbidden.' })
+  @Public()
   @Get()
   async findAll(@Protocol('https') protocol:string, @Query() paginationQuery) {
     console.log(protocol)
